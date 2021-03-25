@@ -1,3 +1,22 @@
 # chesscord
 
-![Online example](https://raw.githubusercontent.com/devskar/chesscord/blob/master/docs/example-image-online.png)
+Chesscord displays your chess activity as discord rich-presence!
+
+## currently supported websites:
+- lichess.org
+- chess.com
+
+
+## Image examples
+### online
+![Online example](docs/example-image-online.png)
+### playing
+![Playing example](docs/example-image-playing.png)
+
+
+## to notice:
+- rich presence can only update every 15 seconds
+- only other discord users are able to press the spectate button on your profile
+- if you are online on multiple platforms, then the order is:
+    - lichess.org > chess.com
+- chess.com playing activity is not working yet!
