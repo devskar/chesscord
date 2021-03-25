@@ -19,7 +19,7 @@ class TrayIcon:
 
         tray_icon = Icon('chesscord',
                          title='chesscord',
-                         icon=Image.open(''))
+                         icon=Image.open('resources/logo.png'))
         tray_icon.menu = Menu(
                              MenuItem(
                                  'hide',
