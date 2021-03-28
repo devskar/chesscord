@@ -4,8 +4,10 @@ from pypresence import Presence
 
 from objects.tray import TrayIcon
 from objects.config import Config
-from platforms.chesscom import Chesscom
 
+from utils.static import OFFLINE, ONLINE, PLAYING
+
+from platforms.chesscom import Chesscom
 from platforms.lichess import Lichess
 
 CLIENT_ID = '823557044983693393'
@@ -32,36 +34,48 @@ def run():
 
     count = 0
 
-    lichess = Lichess(config.get_lichess_username())
-    chesscom = Chesscom(config.get_chesscom_username())
+    platforms = []
+
+    if config.get_lichess_username():
+        platforms.append(Lichess(config.get_lichess_username()))
+
+    if config.get_chesscom_username():
+        platforms.append(Chesscom(config.get_chesscom_username()))
+
+    if len(platforms) == 0:
+        print('FILL IN CONFIG')
+        exit(0)
 
     while states.running:
 
+        print(f'update presence ({count})')
+
+        updated = False
+
         count += 1
-
-        lichess.update_data()
-        chesscom.update_data()
-
         if states.displayed:
 
-            print('[PRESENCE] updated', count)
+            for platform in platforms:
 
-            if lichess.is_online():
+                platform.update_data()
 
-                if lichess.is_playing():
-                    lichess.display_playing(rpc)
-                else:
-                    lichess.display_online(rpc)
-            elif chesscom.is_online():
-                
-                if chesscom.is_playing():
-                    chesscom.display_playing(rpc)
-                else:
-                    chesscom.display_online(rpc)
-            else:
+                status = platform.get_status()
+
+                if status is OFFLINE:
+                    continue
+
+                if status is PLAYING:
+                    platform.display_playing(rpc)
+                    updated = True
+                    break
+
+                if status is ONLINE:
+                    platform.display_online(rpc)
+                    updated = True
+                    break
+
+            if not updated:
                 rpc.clear()
-        else:
-            rpc.clear()
 
         time.sleep(15)
 

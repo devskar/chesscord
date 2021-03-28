@@ -1,3 +1,6 @@
+from utils.static import *
+
+
 class ChessPlatform:
     def __init__(self, username):
         self.username = username
@@ -20,3 +23,12 @@ class ChessPlatform:
 
     def update_data(self):
         self.cache_data = self._get_data()
+
+    def get_status(self):
+        if self.is_online():
+            if self.is_playing():
+                return PLAYING
+            else:
+                return ONLINE
+        else:
+            return OFFLINE

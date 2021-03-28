@@ -17,3 +17,8 @@ CHESSCOM_API_URL = 'https://api.chess.com/pub'
 # FILES
 ICON = 'resources/icon.jpg'
 LICHESS_LOGO = 'resources/lichess-logo.png'
+
+# GAME STATUS
+OFFLINE = 0
+ONLINE = 1
+PLAYING = 2
