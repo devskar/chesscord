@@ -15,7 +15,7 @@ Chesscord displays your chess activity as discord rich-presence!
 
 
 ## to notice:
-- rich presence can only update every 15 seconds
+- rich presence can only be updated every 15th second
 - only other discord users are able to press the spectate button on your profile
 - if you are online on multiple platforms, then the order is:
     - lichess.org > chess.com
