@@ -155,4 +155,5 @@ pip-selfcheck.json
 *.xml
 data.json
 logo.ico
+logo.png
 progress.txt
