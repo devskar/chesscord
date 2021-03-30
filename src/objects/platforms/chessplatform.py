@@ -1,10 +1,10 @@
-from utils.static import *
+from src.utils.static import PLAYING, ONLINE, OFFLINE
 
 
 class ChessPlatform:
     def __init__(self, username):
         self.username = username
-        self.cache_data = None
+        self.cache_data = {}
 
     def is_playing(self):
         pass
@@ -16,7 +16,7 @@ class ChessPlatform:
         pass
 
     def is_online(self):
-        return self.cache_data['online']
+        return self.cache_data.get('online')
 
     def _get_data(self):
         pass
@@ -32,3 +32,6 @@ class ChessPlatform:
                 return ONLINE
         else:
             return OFFLINE
+
+    def update_username(self, username):
+        self.username = username

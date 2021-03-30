@@ -1,6 +1,6 @@
-from platforms.chessplatform import ChessPlatform
-from utils import request
-from utils.static import *
+from src.objects.platforms.chessplatform import ChessPlatform
+from src.utils import request
+from src.utils.static import LICHESS_DETAILS, ONLINE_STATE, LICHESS_IMAGE, INGAME_STATE, LICHESS_API_URL
 
 
 class Lichess(ChessPlatform):
@@ -36,4 +36,9 @@ class Lichess(ChessPlatform):
                    buttons=buttons)
 
     def _get_data(self):
-        return request.get(f'{LICHESS_API_URL}/user/{self.username}')
+        data = request.get(f'{LICHESS_API_URL}/user/{self.username}')
+
+        if data is None:
+            return {}
+
+        return data

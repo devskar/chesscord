@@ -9,4 +9,9 @@ def get(url, **kwargs):
 
     response = requests.get(url, headers=headers, **kwargs)
 
-    return response.json()
+    if response.status_code == 200:
+        return response.json()
+
+    print('Request to', url, 'failed with status code:', response.status_code)
+
+    return None

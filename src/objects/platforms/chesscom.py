@@ -1,6 +1,6 @@
-from platforms.chessplatform import ChessPlatform
-from utils import request
-from utils.static import *
+from src.objects.platforms.chessplatform import ChessPlatform
+from src.utils import request
+from src.utils.static import CHESSCOM_API_URL, CHESSCOM_DETAILS, ONLINE_STATE, CHESSCOM_IMAGE
 
 
 class Chesscom(ChessPlatform):
@@ -11,6 +11,9 @@ class Chesscom(ChessPlatform):
     def _get_data(self):
         data1 = request.get(f'{CHESSCOM_API_URL}/player/{self.username}/is-online')
         data2 = request.get(f'{CHESSCOM_API_URL}/player/{self.username}/games')
+
+        if data1 is None or data2 is None:
+            return {}
 
         return {**data1, **data2}
 

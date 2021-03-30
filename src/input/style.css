@@ -1,0 +1,33 @@
+.container {
+    margin: auto;
+    width: 25%;
+    padding: 15px;
+    text-align: left;
+    display: grid;
+}
+
+.container * {
+    margin: 3px
+}
+
+label {
+    font-size: 24;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+input {
+    padding: 12px;
+    width: 50%;
+    padding: 10px;
+}
+
+button {
+    width: 25%;
+    padding: 10px;
+    margin: auto;
+    font-size: 24;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+
+
