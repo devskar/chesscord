@@ -17,8 +17,7 @@ button.onclick = function(){
     $.post(URL, data, function(data, status){
         console.log('Responded with: ', status)
         if (status == 'success') {
-            console.log('close')
-            // close();
+            close();
         }
     })
     console.log(data)

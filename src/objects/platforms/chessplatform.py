@@ -35,3 +35,6 @@ class ChessPlatform:
 
     def update_username(self, username):
         self.username = username
+
+    def is_available(self):
+        return self.username != '' and self.username is not None

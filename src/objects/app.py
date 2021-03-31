@@ -1,3 +1,4 @@
+import logging
 import time
 
 from pypresence import Presence
@@ -10,36 +11,46 @@ from src.utils.static import OFFLINE, PLAYING, ONLINE, CLIENT_ID
 
 
 def start_mainloop():
-    print('Starting Mainloop')
+    logging.info('Mainloop started')
 
     count = 0
 
     rpc = Presence(CLIENT_ID)
     rpc.connect()
 
+    lichess = Lichess(config.get_lichess_username())
+    chesscom = Chesscom(config.get_chesscom_username())
+
+    platforms = []
+
     while states.running:
-        platforms = []
 
         updated = False
 
-        if config.get_lichess_username():
-            platforms.append(Lichess(config.get_lichess_username()))
+        lichess.update_username(config.get_lichess_username())
+        chesscom.update_username(config.get_chesscom_username())
 
-        if config.get_chesscom_username():
-            platforms.append(Chesscom(config.get_chesscom_username()))
+        if lichess.is_available():
+            platforms.append(lichess)
+
+        if chesscom.is_available():
+            print('available', chesscom.username)
+            platforms.append(chesscom)
+
+        print(platforms)
 
         if len(platforms) == 0:
-
+            logging.warning('Missing information -> update config')
+            rpc.clear()
             utils.open_webpage()
 
             while config.get_temp_data() == {} or all(config.get_temp_data()[key] is None for key in config.get_temp_data()):
-                print('sleep')
                 time.sleep(1)
             else:
                 continue
 
         count += 1
-        print('[PRESENCE] updated presence', count, 'times')
+        logging.info(f'Presence updated ({count})')
 
         for platform in platforms:
 
@@ -63,7 +74,8 @@ def start_mainloop():
         if not updated:
             rpc.clear()
 
+        platforms.clear()
         time.sleep(15)
 
     rpc.clear()
-    print('[APP] Successfully closed')
+    logging.info('Mainloop ended')

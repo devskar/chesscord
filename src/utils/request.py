@@ -1,3 +1,5 @@
+import logging
+
 import requests
 
 
@@ -12,6 +14,6 @@ def get(url, **kwargs):
     if response.status_code == 200:
         return response.json()
 
-    print('Request to', url, 'failed with status code:', response.status_code)
+    logging.warning(f'Request to {url} failed.\n Status code: {response.status_code}')
 
     return None

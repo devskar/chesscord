@@ -1,3 +1,5 @@
+import logging
+
 import src.utils.config as config
 
 from http.server import HTTPServer, SimpleHTTPRequestHandler
@@ -23,7 +25,9 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
 
         for info in data.split('&'):
             platform, uname = info.split('=')
+
             if not uname == '':
+                logging.info(f'Recognized update: {info}')
                 if uname == 'none':
                     dict[platform] = None
                 else:
@@ -34,4 +38,5 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
 
 def run():
     with HTTPServer(('', 5001), CORSRequestHandler) as server:
+        logging.info('Server started')
         server.serve_forever()

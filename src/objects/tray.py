@@ -1,3 +1,5 @@
+import logging
+
 from PIL import Image
 from pystray import Menu, MenuItem, Icon
 
@@ -10,8 +12,7 @@ class TrayIcon:
 
     def start(self):
         def on_clicked(icon, _):
-            print('[APP] Closed by tray icon')
-            print('[APP] Closing...')
+            logging.info('[APP] Closing. Source: TrayIcon')
             states.running = False
             icon.stop()
 

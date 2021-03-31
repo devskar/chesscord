@@ -1,18 +1,34 @@
+import os
+import psutil
 import threading
-import time
-from src import server, app
+import logging
+
+import src.objects.server as server
+import src.objects.app as app
 from src.objects.tray import TrayIcon
 
 import src.utils.config as config
 
-thread = threading.Thread(target=server.run)
-thread.start()
 
-tray = TrayIcon()
-thread = threading.Thread(target=tray.start)
-thread.start()
+if __name__ == '__main__':
 
-print('Loading config...\n')
-config.update_data()
+    logging.getLogger().setLevel(logging.INFO)
 
-app.start_mainloop()
+    thread = threading.Thread(target=server.run)
+    thread.start()
+    logging.info('Server thread started...')
+
+    tray = TrayIcon()
+    thread = threading.Thread(target=tray.start)
+    thread.start()
+    logging.info('Tray thread started...')
+
+    logging.info('Loading config...')
+    config.update_data()
+
+    logging.info('Starting mainloop...')
+    app.start_mainloop()
+    print('ended')
+
+    # kills the system process
+    psutil.Process(os.getpid()).terminate()

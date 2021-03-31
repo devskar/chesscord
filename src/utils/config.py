@@ -1,4 +1,6 @@
 import json
+import logging
+
 from src.utils.static import KEYS, DATA_FILE_DIR
 
 temp_data = {}
@@ -28,6 +30,7 @@ def update_keys(dictionary):
     for key in dictionary:
         data[key] = dictionary[key]
     with open(DATA_FILE_DIR, 'w') as file:
+        logging.info(f'Updated config to: {data}')
         json.dump(data, file)
 
     update_data()
