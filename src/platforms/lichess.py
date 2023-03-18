@@ -17,7 +17,7 @@ class Lichess():
         return 'online' in self.last_request and self.last_request['online']
 
     def is_playing(self):
-        return 'playing' in self.last_request and self.last_request['playing']
+        return 'playing' in self.last_request
 
     def display_online(self, rpc):
         profile = self.last_request['url']
@@ -69,5 +69,4 @@ class Lichess():
 
         if data1 is None or data2 is None:
             return {}
-        print({**data1, **data2})
-        self.last_request = {**data1, **data2}
+        self.last_request = {**data2, **data1}

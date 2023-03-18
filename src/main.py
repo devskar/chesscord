@@ -35,7 +35,6 @@ if __name__ == '__main__':
 
         lichess.update_data()
         status = lichess.get_status()
-        print(lichess.get_status())
         if status is PLAYING:
             lichess.display_playing(rpc)
             updated = True
@@ -43,7 +42,7 @@ if __name__ == '__main__':
         if status is ONLINE:
             lichess.display_online(rpc)
             updated = True
-            
+
         if not updated:
             rpc.clear()
 
