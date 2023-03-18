@@ -5,7 +5,7 @@ Chesscord displays your chess activity as discord rich-presence!
 ## currently supported websites:
 
 - lichess.org
-- chess.com
+- chess.com (got removed since the chess.com api removed neccessary endpoints)
 
 ## Image examples
 
