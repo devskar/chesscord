@@ -1,0 +1,31 @@
+# PRESENCE ID
+DISCORD_CLIENT_ID = '823557044983693393'
+
+# IMAGES
+LICHESS_IMAGE = 'lichess-logo'
+CHESSCOM_IMAGE = 'chesscom-logo'
+
+# STATES
+INGAME_STATE = 'in a match'
+ONLINE_STATE = 'online'
+
+# DETAILS
+LICHESS_DETAILS = 'on lichess.org'
+CHESSCOM_DETAILS = 'on chess.com'
+
+# URLS
+LICHESS_API_URL = 'https://lichess.org/api'
+CHESSCOM_API_URL = 'https://api.chess.com/pub'
+
+# GAME STATUS
+OFFLINE = 0
+ONLINE = 1
+PLAYING = 2
+
+# CONFIG
+CONFIG_FILE_PATH = "config.json"
+CONFIG_LICHESS_USER_KEY = "lichessUser"
+CONFIG_CHESSCOM_USER_KEY = "chesscomUser"
+
+# DISCORD
+DISCORD_RPC_INTERVAL = 15

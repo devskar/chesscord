@@ -1,34 +1,52 @@
-import os
-import psutil
-import threading
 import logging
+import time
 
-import src.objects.server as server
-import src.objects.app as app
-from src.objects.tray import TrayIcon
+from pypresence import Presence
 
-import src.utils.config as config
-
+import config
+from platforms.lichess import Lichess
+from utils.constants import (CONFIG_LICHESS_USER_KEY, DISCORD_CLIENT_ID,
+                             DISCORD_RPC_INTERVAL, ONLINE, PLAYING)
 
 if __name__ == '__main__':
-
     logging.getLogger().setLevel(logging.INFO)
+    logging.info('Starting chesscord ...')
 
-    thread = threading.Thread(target=server.run)
-    thread.start()
-    logging.info('Server thread started...')
+    logging.info('Loading config ...')
+    configuration = config.load_config()
 
-    tray = TrayIcon()
-    thread = threading.Thread(target=tray.start)
-    thread.start()
-    logging.info('Tray thread started...')
+    if configuration == None:
+        logging.error('No config found -> aborting')
+        exit(1)
 
-    logging.info('Loading config...')
-    config.update_data()
+    if configuration.get(CONFIG_LICHESS_USER_KEY) is None:
+        logging.error('No lichess user specified -> aborting')
+        exit(1)
+    lichess = Lichess(configuration.get(CONFIG_LICHESS_USER_KEY))
 
-    logging.info('Starting mainloop...')
-    app.start_mainloop()
-    print('ended')
+    logging.info(f'Successfully loaded lichess!')
 
-    # kills the system process
-    psutil.Process(os.getpid()).terminate()
+    logging.info('Connecting to Discord ...')
+    rpc = Presence(DISCORD_CLIENT_ID)
+    rpc.connect()
+    logging.info('Connected to Discord!')
+    while True:
+        updated = False
+
+        lichess.update_data()
+        status = lichess.get_status()
+        print(lichess.get_status())
+        if status is PLAYING:
+            lichess.display_playing(rpc)
+            updated = True
+            break
+
+        if status is ONLINE:
+            lichess.display_online(rpc)
+            updated = True
+            break
+
+        if not updated:
+            rpc.clear()
+
+        time.sleep(DISCORD_RPC_INTERVAL)

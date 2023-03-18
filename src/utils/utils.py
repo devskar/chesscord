@@ -1,6 +1,6 @@
 import webbrowser
 
-from src.utils.static import WEBPAGE_DIR
+from utils.constants import WEBPAGE_DIR
 
 
 def open_webpage():
